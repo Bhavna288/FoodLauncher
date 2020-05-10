@@ -27,8 +27,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.launcher.foodlauncher.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
@@ -37,6 +42,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     private Context context;
     private int rowLayout;
     GradientDrawable shape = new GradientDrawable();
+    TextView textOne;
+    TextView textTwo;
+    TextView textThree;
+    TextView resName ;
+    TextView resCuisines ;
+    TextView resTimings ;
+    TextView resRating ;
+    TextView resAddress;
+    TextView resPhone ;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView textOne;
@@ -154,10 +168,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView,boolean isChecked){
                         if (isChecked){
-                            Toast.makeText(context.getApplicationContext(),"Added to Favorite",Toast.LENGTH_LONG).show();
+                            addToFavList();
+                            Toast.makeText(context.getApplicationContext(),"Added to Favorite",Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(context.getApplicationContext(),"Removed from Favorite",Toast.LENGTH_LONG).show();
+                            Toast.makeText(context.getApplicationContext(),"Removed from Favorite",Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -200,6 +215,44 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
 
 
+    }
+
+    private void addToFavList() {
+
+        String saveCurrentTime, saveCurrentDate;
+
+
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+        saveCurrentDate = currentDate.format(calForDate.getTime());
+
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        saveCurrentTime = currentDate.format(calForDate.getTime());
+
+        final DatabaseReference favListRef = FirebaseDatabase.getInstance().getReference().child("Fav List");
+
+        final HashMap<String,Object> favMap = new HashMap<>();
+        favMap.put("resName",resName.getText().toString());
+        favMap.put("textOne",textOne.getText().toString());
+        favMap.put("textTwo",textTwo.getText().toString());
+        favMap.put("textThree",textThree.getText().toString());
+        favMap.put("date",saveCurrentDate);
+        favMap.put("time",saveCurrentTime);
+        favMap.put("resCuisines",resCuisines.getText().toString());
+        favMap.put("resTimings",resTimings.getText().toString());
+        favMap.put("resRating",resRating.getText().toString());
+        favMap.put("resAddress",resAddress.getText().toString());
+        favMap.put("resPhone",resPhone.getText().toString());
+
+        favListRef.child("User").child(Prevalant.currentOnlineUser.getEmail()).child("Restaurants").child(resName.toString()).updateChildren(favMap).addOnCompleteListener(new OnCompleteListener<void>() {
+            @Override
+            public void onComplete(@NonNull Task<void> task){
+                if(task.isSuccessful())
+                {
+                    Toast.makeText(context.getApplicationContext(),"Added to Favorite",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }}
     }
 
     void openWhatsApp(View view){

@@ -14,10 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -108,6 +110,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 TextView tableReservation = dialogView.findViewById(R.id.res_table);
                 RelativeLayout rate = dialogView.findViewById(R.id.rel_rating);
 
+                //added later
+                ToggleButton toggleButton = dialogView.findViewById(R.id.toggle);
+
                 resName.setText(restaurants.get(position).getRestaurant().getName());
                 resAddress.setText(restaurants.get(position).getRestaurant().getLocation().getAddress());
                 resCuisines.setText(restaurants.get(position).getRestaurant().getCuisines());
@@ -142,6 +147,22 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     }
                 });
 
+
+                //added later
+
+                toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView,boolean isChecked){
+                        if (isChecked){
+                            Toast.makeText(context.getApplicationContext(),"Added to Favorite",Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(context.getApplicationContext(),"Removed from Favorite",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                });
+
                 if(!restaurants.get(position).getRestaurant().getPhoneNumbers().equals("Not available for this place")) {
                     resPhone.setText("Phone number: " + restaurants.get(position).getRestaurant().getPhoneNumbers());
                     Uri u = Uri.parse("tel:" + restaurants.get(position).getRestaurant().getPhoneNumbers());
@@ -173,7 +194,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
+
+
         });
+
+
+
     }
 
     void openWhatsApp(View view){
@@ -199,6 +225,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         }
 
     }
+
+
 
     @Override
     public int getItemCount() {

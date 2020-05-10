@@ -3,6 +3,8 @@ package com.launcher.foodlauncher.ui.home;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentSender;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,12 +18,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -55,7 +59,9 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.radiobutton.MaterialRadioButton;
+import com.launcher.foodlauncher.MainActivity;
 import com.launcher.foodlauncher.R;
 import com.launcher.foodlauncher.adapter.PlaceAutoSuggestAdapter;
 import com.launcher.foodlauncher.api.ApiSearchInterface;
@@ -76,6 +82,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private HomeViewModel homeViewModel;
 
     private BottomSheetBehavior bottomSheetBehavior;
+//added later
+    private ToggleButton toggleButton;
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -98,6 +106,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private String sortByRating = "rating";
     private String sortByCost = "cost";
 
+
     RecyclerView recyclerView;
 
     List<Restaurant> restaurants1;
@@ -110,6 +119,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+
 
         return root;
     }
@@ -131,6 +142,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         btnNearby = getView().findViewById(R.id.btn_nearby_find);
         btnFind = getView().findViewById(R.id.btn_find);
         rippleBg = getView().findViewById(R.id.ripple_bg);
+
 
         btnFind.setVisibility(View.INVISIBLE);
 
@@ -160,6 +172,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 }, 2000);
             }
         });
+
+
+
+
+
 
 
     }
@@ -234,6 +251,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 return true;
             }
         });
+
+
     }
 
     private void geoLocate() {
@@ -259,6 +278,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             btnNearby.setVisibility(View.INVISIBLE);
             btnFind.setVisibility(View.VISIBLE);
 
+
+
+
             btnFind.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -274,6 +296,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     }, 2000);
                 }
             });
+
 
         }
     }
@@ -409,4 +432,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
     }
+
+
 }

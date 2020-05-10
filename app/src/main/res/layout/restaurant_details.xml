@@ -11,6 +11,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+<!--added later-->
+
+        <ToggleButton
+            android:id="@+id/toggle"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textOn=""
+            android:textOff=""
+            android:background="@drawable/toggle_selector"
+           />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

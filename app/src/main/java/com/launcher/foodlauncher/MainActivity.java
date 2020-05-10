@@ -2,6 +2,9 @@ package com.launcher.foodlauncher;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.launcher.foodlauncher.ui.favourites.FavouritesFragment;
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+
+
 
         homeFragment = new HomeFragment();
         findFoodFragment = new FindFoodFragment();
@@ -77,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+
     }
 
     private void init() {
@@ -92,4 +100,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
+
 }

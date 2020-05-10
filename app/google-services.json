@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "491316445298-t41fj0eh9emuismirtvhcittgt1v2qps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.launcher.foodlauncher",
+            "certificate_hash": "8a6552f0c0a046a6b8beaa99d9a4852b624286e4"
+          }
+        },
+        {
           "client_id": "491316445298-ipubie89cu352v14pvbgg08566igrecq.apps.googleusercontent.com",
           "client_type": 3
         }
